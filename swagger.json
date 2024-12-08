@@ -1,0 +1,198 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Local Event Finder API",
+      "version": "1.0.0",
+      "description": "API for managing events, user preferences, and notifications."
+    },
+    "paths": {
+      "/events": {
+        "get": {
+          "summary": "Get events",
+          "parameters": [
+            {
+              "name": "city",
+              "in": "query",
+              "description": "Filter events by city",
+              "required": false,
+              "schema": { "type": "string" }
+            },
+            {
+              "name": "dateRange",
+              "in": "query",
+              "description": "Filter events by date range (YYYY-MM-DD,YYYY-MM-DD)",
+              "required": false,
+              "schema": { "type": "string" }
+            },
+            {
+              "name": "category",
+              "in": "query",
+              "description": "Filter events by category",
+              "required": false,
+              "schema": { "type": "string" }
+            }
+          ],
+          "responses": {
+            "200": { "description": "A list of events" }
+          }
+        },
+        "post": {
+          "summary": "Add a new event",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "date": { "type": "string", "format": "date-time" },
+                    "location": { "type": "string" },
+                    "category": { "type": "string" },
+                    "description": { "type": "string" }
+                  },
+                  "required": ["name", "date", "location", "category", "description"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": { "description": "Event created" }
+          }
+        }
+      },
+      "/events/{eventID}": {
+        "put": {
+          "summary": "Update an event by ID",
+          "parameters": [
+            {
+              "name": "eventID",
+              "in": "path",
+              "description": "ID of the event to update",
+              "required": true,
+              "schema": { "type": "string" }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "date": { "type": "string", "format": "date-time" },
+                    "description": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": { "description": "Event updated" }
+          }
+        },
+        "delete": {
+          "summary": "Delete an event by ID",
+          "parameters": [
+            {
+              "name": "eventID",
+              "in": "path",
+              "description": "ID of the event to delete",
+              "required": true,
+              "schema": { "type": "string" }
+            }
+          ],
+          "responses": {
+            "204": { "description": "Event deleted" }
+          }
+        }
+      },
+      "/preferences": {
+        "post": {
+          "summary": "Add user preferences",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userID": { "type": "string" },
+                    "preferredEventType": { "type": "string" },
+                    "preferredLocation": { "type": "string" }
+                  },
+                  "required": ["userID"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": { "description": "Preferences added" }
+          }
+        }
+      },
+      "/preferences/{userID}": {
+        "get": {
+          "summary": "Get user preferences by ID",
+          "parameters": [
+            {
+              "name": "userID",
+              "in": "path",
+              "description": "ID of the user",
+              "required": true,
+              "schema": { "type": "string" }
+            }
+          ],
+          "responses": {
+            "200": { "description": "User preferences retrieved" }
+          }
+        },
+        "put": {
+          "summary": "Update user preferences by ID",
+          "parameters": [
+            {
+              "name": "userID",
+              "in": "path",
+              "description": "ID of the user",
+              "required": true,
+              "schema": { "type": "string" }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "preferredEventType": { "type": "string" },
+                    "preferredLocation": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": { "description": "Preferences updated" }
+          }
+        },
+        "delete": {
+          "summary": "Delete user preferences by ID",
+          "parameters": [
+            {
+              "name": "userID",
+              "in": "path",
+              "description": "ID of the user",
+              "required": true,
+              "schema": { "type": "string" }
+            }
+          ],
+          "responses": {
+            "204": { "description": "Preferences deleted" }
+          }
+        }
+      }
+    }
+  }
+  
