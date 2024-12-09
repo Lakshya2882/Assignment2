@@ -1,18 +1,10 @@
 const express = require('express');
 const Event = require('../models/event');
 const moment = require('moment'); // Import moment.js
-<<<<<<< HEAD
 const router = express.Router();
 
 // GET /events - Search for Events
 router.get('/', async (req, res) => {
-=======
-const verifyToken = require('../middleware/verifyToken'); // Import the token verification middleware
-const router = express.Router();
-
-// GET /events - Search for Events (Protected)
-router.get('/', verifyToken, async (req, res) => {
->>>>>>> 2acfb9569782989a5897c0bfa4e25db1f3c6f63b
     const { city, dateRange, category } = req.query;
 
     const query = {};
@@ -51,13 +43,8 @@ router.get('/', verifyToken, async (req, res) => {
     }
 });
 
-<<<<<<< HEAD
 // POST /events - Add New Event
 router.post('/', async (req, res) => {
-=======
-// POST /events - Add New Event (Protected)
-router.post('/', verifyToken, async (req, res) => {
->>>>>>> 2acfb9569782989a5897c0bfa4e25db1f3c6f63b
     try {
         // Parse and validate the date field using moment.js
         const { date } = req.body;
@@ -73,13 +60,8 @@ router.post('/', verifyToken, async (req, res) => {
     }
 });
 
-<<<<<<< HEAD
 // PUT /events/:eventID - Update Event by ID
 router.put('/:eventID', async (req, res) => {
-=======
-// PUT /events/:eventID - Update Event by ID (Protected)
-router.put('/:eventID', verifyToken, async (req, res) => {
->>>>>>> 2acfb9569782989a5897c0bfa4e25db1f3c6f63b
     try {
         // Validate the date field if provided
         if (req.body.date && !moment(req.body.date, moment.ISO_8601, true).isValid()) {
@@ -102,13 +84,8 @@ router.put('/:eventID', verifyToken, async (req, res) => {
     }
 });
 
-<<<<<<< HEAD
 // DELETE /events/:eventID - Delete Event by ID
 router.delete('/:eventID', async (req, res) => {
-=======
-// DELETE /events/:eventID - Delete Event by ID (Protected)
-router.delete('/:eventID', verifyToken, async (req, res) => {
->>>>>>> 2acfb9569782989a5897c0bfa4e25db1f3c6f63b
     try {
         const deletedEvent = await Event.findOneAndDelete({ eventID: req.params.eventID });
 
